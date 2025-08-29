@@ -13,6 +13,12 @@ This repository contains the implementation of **ACUMEN** (Active Cross-Entropy 
 
 This work was developed as part of a research project inspired by Google Summer of Code (GSoC) guidelines, focusing on advancing uncertainty-aware active learning for time-series data in healthcare.
 
+## Algorithm Overview
+
+![ACUMEN Algorithm Overview](algorithm.svg)
+
+*Figure: Overview of the ACUMEN framework showing the integration of Neural ODEs with CEM-MPC for uncertainty-driven active learning.*
+
 ## Contributions
 ### Framework Implementation
 - Developed Neural ODE-based surrogate models for continuous-time system identification.
