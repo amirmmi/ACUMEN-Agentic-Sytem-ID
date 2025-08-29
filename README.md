@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ACUMEN: Active Cross-Entropy Method with Uncertainty-driven Neural ODEs
 
 ## Project Overview
