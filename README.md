@@ -87,8 +87,7 @@ pip install stable-baselines tensorflow
 Install custom environment and extension:
 ```bash
 # Install gym_oscillator (if not already installed)
-pip install git+https://github.com/dylov/rl-dbs.git  # Or your fork
-# Ensure oscillator_cpp.so is built and available in the project directory
+pip install git+https://github.com/dylov/rl-dbs.git 
 ```
 
 
