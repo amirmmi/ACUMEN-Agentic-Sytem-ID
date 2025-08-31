@@ -1,15 +1,22 @@
 # ACUMEN: Active Cross-Entropy Method with Uncertainty-driven Neural ODEs
 
 ## Project Overview
-This repository contains the implementation of **ACUMEN** (Active Cross-Entropy Method with Uncertainty-driven Neural ODEs), a data-efficient framework for system identification in healthcare. The primary goal of the project is to develop an active learning system that couples Neural Ordinary Differential Equations (Neural ODEs) with uncertainty-driven planning via the Cross-Entropy Method Model Predictive Control (CEM-MPC) to actively seek informative experiments. This enables efficient modeling of continuous-time physiological dynamics in data-limited settings, such as neuromodulation, while minimizing patient burden and ensuring safety.
+This repository contains the implementation of **ACUMEN** (Active Cross-Entropy Method with Uncertainty-driven Neural ODEs), a data-efficient framework for system identification in healthcare applications. ACUMEN addresses the challenge of learning accurate physiological models from limited and noisy time-series data by combining Neural Ordinary Differential Equations (Neural ODEs) with uncertainty-driven active exploration via Cross-Entropy Method Model Predictive Control (CEM-MPC).
+
+The framework iteratively alternates between uncertainty-guided exploration and model retraining, progressively directing data collection toward underrepresented regions of the state space while avoiding redundant sampling. This approach is particularly valuable in healthcare settings where data collection is expensive, ethically constrained, or poses patient burden.
 
 
 **Key features include:**
-- Training an ensemble of Neural ODEs to model physiological dynamics.
-- Quantifying epistemic uncertainty through ensemble disagreement.
-- Using CEM-MPC to select actions that maximize uncertainty, with additions like optimistic state progression, novelty terms, and adaptive scaling for balanced exploration.
-- Evaluation in the Reinforcement Learning for Deep Brain Stimulation (RL-DBS) environment, demonstrating up to 24.2% improvement in mean squared prediction error over passive data collection.
-- Full training, evaluation, and visualization workflow provided in multiple Jupyter notebooks, with the main implementation in `NeuralODE_CEM_MPC_Method.ipynb`.
+- **Neural ODE Ensemble**: Training an ensemble of Neural ODEs to model continuous-time physiological dynamics with epistemic uncertainty quantification
+- **Uncertainty-Driven Exploration**: Using CEM-MPC to select actions that maximize epistemic uncertainty, with optimistic state progression and adaptive scaling
+- **Statistical Validation**: Comprehensive bootstrap analysis and statistical testing demonstrating robust improvements
+- **Healthcare Applications**: Evaluation in the Reinforcement Learning for Deep Brain Stimulation (RL-DBS) environment, demonstrating up to 24.2% improvement in mean squared prediction error over passive data collection
+- **Reproducible Implementation**: Full training, evaluation, and visualization workflow provided in multiple Jupyter notebooks, with the main implementation in `NeuralODE_CEM_MPC_Method.ipynb`
+
+**Research Impact:**
+- Achieves statistically significant improvements (p = 0.017) with 15.7% ± 8.8% average MSE reduction
+- Demonstrates consistent superiority across all tested sample sizes (Wilcoxon signed-rank test: p = 0.031)
+- Provides both improved accuracy and better uncertainty calibration for healthcare applications
 
 This work was developed as part of a research project inspired by Google Summer of Code (GSoC) guidelines, focusing on advancing uncertainty-aware active learning for time-series data in healthcare.
 
@@ -18,6 +25,17 @@ This work was developed as part of a research project inspired by Google Summer 
 ![ACUMEN Algorithm Overview](algorithm.svg)
 
 *Figure: Overview of the ACUMEN framework showing the integration of Neural ODEs with CEM-MPC for uncertainty-driven active learning.*
+
+## Methodology
+
+### Problem Formulation
+ACUMEN addresses system identification in healthcare as learning patient-specific dynamical models from irregular and noisy time-series. Given latent state $x(t) ∈ ℝⁿ$ (e.g., neural or cardiovascular activity) and external interventions $u(t) ∈ ℝᵈ$ (e.g., stimulation, drug dosage), observations are collected at irregular times with dynamics governed by $\dot{x}(t) = f_θ(x(t), u(t), t)$.
+
+### Core Components
+1. **Neural ODE Ensemble**: Multiple Neural ODE models parameterized by MLPs to capture continuous-time dynamics with epistemic uncertainty quantification through model disagreement
+2. **CEM-MPC Planning**: Cross-Entropy Method for Model Predictive Control adapted to maximize epistemic uncertainty with optimistic state progression and action smoothness penalties
+3. **Adaptive Scaling**: Normalization of uncertainty estimates across heterogeneous state variables to prevent bias toward high-variance dimensions
+4. **Iterative Refinement**: Progressive model improvement through targeted data collection in uncertain regions
 
 ## Contributions
 ### Framework Implementation
@@ -117,9 +135,21 @@ Additional notebooks provide specific analyses:
 
 ## Key Results
 
-The following figure summarizes the comparison between the neural ODE CEM-MPC approach and random exploration:
+### Statistical Validation
+- **Statistically significant improvements**: Paired t-test p = 0.017, demonstrating robust superiority over random data collection
+- **Consistent performance**: CEM-MPC outperformed random sampling across all tested sample sizes (Wilcoxon signed-rank test: p = 0.031)
+- **Quantified improvements**: 15.7% ± 8.8% average MSE reduction with up to 24.2% improvement at optimal sample sizes
+- **Bootstrap validation**: 95% confidence interval [0.015, 0.045] for mean difference, excluding zero
+
+### Performance Metrics
+The following figure summarizes the comprehensive comparison between the neural ODE CEM-MPC approach and random exploration:
 
 ![Neural ODE CEM-MPC vs Random Combined](neural_ode_cem_mpc_vs_random_combined.png)
+
+### Uncertainty Calibration
+- **Improved model reliability**: CEM-MPC training yields better-calibrated uncertainty estimates
+- **Reduced predictive uncertainty**: Tighter uncertainty bands with maintained accuracy
+- **Enhanced exploration efficiency**: Targeted data collection in underrepresented state space regions
 
 ## Challenges and Learnings
 ### Challenges
@@ -137,8 +167,27 @@ The following figure summarizes the comparison between the neural ODE CEM-MPC ap
 This project enhanced understanding of Neural ODEs, MPC, and active learning in healthcare AI.
 
 ## Future Work
-- Combine with RL for closed-loop therapy.
-- Apply to real datasets (e.g., glucose-insulin for diabetes, pharmacokinetic for anesthesia).
-- Add advanced safety constraints for clinical use.
-- Benchmark on additional environments.
-- Community contributions for multi-modal data support.
+- **Real-world validation**: Extension to real physiological datasets (glucose-insulin dynamics, pharmacokinetics)
+- **Closed-loop integration**: Combination with reinforcement learning for adaptive therapy systems
+- **Safety enhancements**: Advanced constraint handling for clinical deployment
+- **Multi-modal support**: Extension to heterogeneous data types and sensor modalities
+- **Scalability improvements**: Optimization for larger state spaces and longer horizons
+
+## Publication and Citation
+This work represents a comprehensive research contribution to uncertainty-aware active learning in healthcare. The full methodology, experimental validation, and theoretical foundations are detailed in our research paper. If you use this work, please cite:
+
+```bibtex
+@article{afkhami2025acumen,
+  title={ACUMEN: Active Cross-Entropy Method with Uncertainty-driven Neural ODEs for Data-Efficient System Identification in Healthcare},
+  author={Afkhami Ardekani, Amirhossein and Zeydabadinezhad, Mahmoud and Mahmoudi, Babak},
+  journal={Workshop on Learning from Time Series for Health, NeurIPS},
+  year={2025}
+}
+```
+
+## Contact and Collaboration
+For questions, suggestions, or collaboration opportunities:
+- **Primary Author**: Amirhossein Afkhami Ardekani (afkhamia@ualberta.ca)
+- **Collaborators**: Mahmoud Zeydabadinezhad, Babak Mahmoudi
+
+We welcome contributions, feedback, and applications to new healthcare domains!
