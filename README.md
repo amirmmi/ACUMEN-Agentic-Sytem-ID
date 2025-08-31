@@ -173,21 +173,5 @@ This project enhanced understanding of Neural ODEs, MPC, and active learning in 
 - **Multi-modal support**: Extension to heterogeneous data types and sensor modalities
 - **Scalability improvements**: Optimization for larger state spaces and longer horizons
 
-## Publication and Citation
-This work represents a comprehensive research contribution to uncertainty-aware active learning in healthcare. The full methodology, experimental validation, and theoretical foundations are detailed in our research paper. If you use this work, please cite:
-
-```bibtex
-@article{afkhami2025acumen,
-  title={ACUMEN: Active Cross-Entropy Method with Uncertainty-driven Neural ODEs for Data-Efficient System Identification in Healthcare},
-  author={Afkhami Ardekani, Amirhossein and Zeydabadinezhad, Mahmoud and Mahmoudi, Babak},
-  journal={Workshop on Learning from Time Series for Health, NeurIPS},
-  year={2025}
-}
-```
-
-## Contact and Collaboration
-For questions, suggestions, or collaboration opportunities:
-- **Primary Author**: Amirhossein Afkhami Ardekani (afkhamia@ualberta.ca)
-- **Collaborators**: Mahmoud Zeydabadinezhad, Babak Mahmoudi
 
 We welcome contributions, feedback, and applications to new healthcare domains!
